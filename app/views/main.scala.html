@@ -1,0 +1,30 @@
+@(title: String)(content: Html)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@title</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("Flat-UI/css/flat-ui.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("Flat-UI/bootstrap/css/bootstrap.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <script src="@routes.Assets.at("Flat-UI/js/jquery-2.0.3.min.js")" type="text/javascript"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+                    <span class="sr-only">Toggle navigation</span>
+                </button>
+                <a class="navbar-brand" href="http://julien.deray.fr/">Spikizi</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse-01">
+                <p class="navbar-text navbar-right">Signed in as <a class="navbar-link" href="http://julien.deray.fr/">Julien DERAY</a></p>
+            </div>
+        </nav>
+        @content
+        <script src="@routes.Assets.at("Flat-UI/js/jquery-2.0.3.min.js")"></script>
+        <script src="@routes.Assets.at("Flat-UI/js/bootstrap.min.js")"></script>
+    </body>
+</html>
