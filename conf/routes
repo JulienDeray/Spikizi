@@ -14,7 +14,8 @@ POST        /authentification        controllers.Application.authentification
 
 # Mobile
 GET         /m                       controllers.Application.mobile
-GET         /m/:name                 controllers.Application.mobileSpeak(name)
+GET         /m/user/:name            controllers.Application.mobileSpeak(name)
+GET         /m/logout                controllers.Application.logout
 
 POST        /m/newUser               controllers.Application.newUser
 

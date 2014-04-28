@@ -5,7 +5,6 @@ import play.api.data.Form
 import play.api.data.Forms._
 import model.Spectator
 
-
 object Application extends Controller {
 
   // Forms
@@ -59,12 +58,24 @@ object Application extends Controller {
 
   // --- Mobile ---
 
-  def mobile = Action {
-    Ok( views.html.mobile() )
+  def mobile = Action { implicit request =>
+    request.session.get("user").fold(
+      Ok( views.html.mobile() )
+    ) (
+      user => Redirect( routes.Application.mobileSpeak( user ) )
+    )
   }
 
-  def mobileSpeak(name: String) = Action {
-    Ok( views.html.mobileSpeak( name ) )
+  def mobileSpeak(name: String) = Action { implicit request =>
+    request.session.get("user").fold(
+      Redirect( routes.Application.mobile() )
+    ) (
+      user =>
+        if ( user == name )
+          Ok( views.html.mobileSpeak( name ) )
+        else
+          Redirect( routes.Application.mobile() )
+    )
   }
 
   def newUser = Action { implicit request =>
@@ -75,9 +86,43 @@ object Application extends Controller {
       userName => {
         users = new Spectator( userName ) :: users
         Pusher.pushNewUser(userName)
-        Redirect( routes.Application.mobileSpeak( userName ) )
+        Redirect( routes.Application.mobileSpeak( userName ) ).withSession( "user" -> userName )
       }
     )
   }
 
+  def logout = Action { implicit request => {
+      request.session.get("user").fold(
+        Redirect( routes.Application.mobile() )
+      ) (
+        currentUser => {
+          users = users.filterNot( user => user.name == currentUser)
+          Redirect( routes.Application.mobile() ).withNewSession
+        }
+      )
+    }
+  }
+
+  /**
+   * Provide security features
+   */
+  trait Secured {
+
+    /**
+     * Retrieve the connected user name.
+     */
+    private def user( request: RequestHeader ) = request.session.get("user")
+
+    /**
+     * Redirect to login if the user in not authorized.
+     */
+    private def onUnauthorized( request: RequestHeader ) = Results.Redirect( routes.Application.mobile() )
+
+    /**
+     * Action for authenticated users.
+     */
+    def IsAuthenticated( f: => String => Request[AnyContent] => Result ) = Security.Authenticated( user, onUnauthorized ) { user =>
+      Action( request => f( user )( request ) )
+    }
+  }
 }
