@@ -3,7 +3,7 @@ package controllers
 import play.api.mvc._
 import play.api.data.Form
 import play.api.data.Forms._
-import model.Spectator
+import model.{SpectatorManager, Spectator}
 
 object Application extends Controller {
 
@@ -21,7 +21,7 @@ object Application extends Controller {
 
   // -----
 
-  var users: List[Spectator] = Nil
+  var sm = new SpectatorManager()
 
   // --- Dashboard ---
 
@@ -30,7 +30,7 @@ object Application extends Controller {
   }
 
   def dashboard = Action {
-    Ok( views.html.dashboard( users ) )
+    Ok( views.html.dashboard( sm.users ) )
   }
 
   def webSocket() = Action {
@@ -85,8 +85,7 @@ object Application extends Controller {
           BadRequest( "Invalid form" )
         },
         userName => {
-          users = new Spectator( userName ) :: users
-          Pusher.pushNewUser(userName)
+          sm.addSpectator( userName )
           Redirect( routes.Application.mobileSpeak( userName ) ).withSession( "user" -> userName )
         }
       )
@@ -99,9 +98,8 @@ object Application extends Controller {
       request.session.get("user").fold(
         Redirect( routes.Application.mobile() )
       ) (
-        currentUser => {
-          users = users.filterNot( user => user.name == currentUser)
-          Pusher.pushDelUser(currentUser)
+        userName => {
+          sm.delSpectator( userName )
           Redirect( routes.Application.mobile() ).withNewSession
         }
       )
