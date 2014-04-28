@@ -79,15 +79,19 @@ object Application extends Controller {
   }
 
   def newUser = Action { implicit request =>
-    userName.bindFromRequest.fold(
-      formWithErrors => {
-        BadRequest( "Invalid form" )
-      },
-      userName => {
-        users = new Spectator( userName ) :: users
-        Pusher.pushNewUser(userName)
-        Redirect( routes.Application.mobileSpeak( userName ) ).withSession( "user" -> userName )
-      }
+    request.session.get("user").fold(
+      userName.bindFromRequest.fold(
+        formWithErrors => {
+          BadRequest( "Invalid form" )
+        },
+        userName => {
+          users = new Spectator( userName ) :: users
+          Pusher.pushNewUser(userName)
+          Redirect( routes.Application.mobileSpeak( userName ) ).withSession( "user" -> userName )
+        }
+      )
+    ) (
+      userName => Redirect( routes.Application.mobileSpeak( userName ) )
     )
   }
 
@@ -97,32 +101,10 @@ object Application extends Controller {
       ) (
         currentUser => {
           users = users.filterNot( user => user.name == currentUser)
+          Pusher.pushDelUser(currentUser)
           Redirect( routes.Application.mobile() ).withNewSession
         }
       )
-    }
-  }
-
-  /**
-   * Provide security features
-   */
-  trait Secured {
-
-    /**
-     * Retrieve the connected user name.
-     */
-    private def user( request: RequestHeader ) = request.session.get("user")
-
-    /**
-     * Redirect to login if the user in not authorized.
-     */
-    private def onUnauthorized( request: RequestHeader ) = Results.Redirect( routes.Application.mobile() )
-
-    /**
-     * Action for authenticated users.
-     */
-    def IsAuthenticated( f: => String => Request[AnyContent] => Result ) = Security.Authenticated( user, onUnauthorized ) { user =>
-      Action( request => f( user )( request ) )
     }
   }
 }

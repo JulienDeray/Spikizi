@@ -7,6 +7,7 @@ import ExecutionContext.Implicits.global
 
 object Pusher extends Controller {
 
+
   val (out, channel) = Concurrent.broadcast[String]
 
   def sse() = WebSocket.using[String] {
@@ -23,5 +24,9 @@ object Pusher extends Controller {
 
   def pushNewUser(userName: String) = {
     channel push "{ \"command\" : \"newUser\", \"userName\" : \"" + userName + "\" }"
+  }
+
+  def pushDelUser(userName: String) = {
+    channel push "{ \"command\" : \"delUser\", \"userName\" : \"" + userName + "\" }"
   }
 }

@@ -19,7 +19,10 @@ function openSSEConnection() {
 
         switch( data.command ) {
             case "newUser":
-                $('#userList').append('<tr><td>' + data.userName + '</td></tr>')
+                $('#userList').append('<tr id="' + data.userName + '"><td>' + data.userName + '</td></tr>');
+                break;
+            case "delUser":
+                $('#' + data.userName).remove();
                 break;
         }
     }
