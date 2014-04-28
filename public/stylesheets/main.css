@@ -1,3 +1,18 @@
+body {
+    /*background-color: #f39c12;*/
+}
+
+.flat-well-container {
+    background-color: #f1c40f;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.flat-well {
+    background-color: #f1c40f;
+    padding: 20px;
+}
+
 .navbar-text {
     margin-top: 0;
     margin-bottom: 0;

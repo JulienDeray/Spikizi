@@ -2,8 +2,24 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
-GET     /                           controllers.Application.index
+# Dashboard
+GET         /                        controllers.Application.index
+GET         /dashboard               controllers.Application.dashboard
+
+## JS
+GET         /websocket               controllers.Application.webSocket
+GET         /js/interpretedJS        controllers.Application.interpretedJS()
+
+POST        /authentification        controllers.Application.authentification
+
+# Mobile
+GET         /m                       controllers.Application.mobile
+GET         /m/:name                 controllers.Application.mobileSpeak(name)
+
+POST        /m/newUser               controllers.Application.newUser
+
+# WebSocket
+GET         /sse                     controllers.Pusher.sse()
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET         /assets/*file            controllers.Assets.at(path="/public", file)

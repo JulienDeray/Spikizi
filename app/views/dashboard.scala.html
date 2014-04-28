@@ -1,0 +1,19 @@
+@(users: List[model.Spectator])
+
+@main("Spikizi - Dashboard") {
+
+    @*<div class="flat-well-container">*@
+    @*<div class="flat-well col-md-8 col-md-offset-2">*@
+    <table id="userList" class="table table-striped">
+        @users.map { user =>
+            <tr>
+                <td>@user.name</td>
+            </tr>
+        }
+    </table>
+    @*</div>*@
+    @*</div>*@
+
+    <script src="@routes.Application.webSocket()" type="text/javascript"></script>
+    <script src="@routes.Application.interpretedJS()" type="text/javascript"></script>
+}
