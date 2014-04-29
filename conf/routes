@@ -3,22 +3,22 @@
 # ~~~~
 
 # Dashboard
-GET         /                        controllers.Application.dashboardLogin
-GET         /dashboard               controllers.Application.dashboard
-GET         /dashboard/logout        controllers.Application.dashboardLogout
+GET         /                        controllers.Dashboard.dashboardLogin
+GET         /dashboard               controllers.Dashboard.dashboard
+GET         /dashboard/logout        controllers.Dashboard.dashboardLogout
 
 ## JS
-GET         /websocket               controllers.Application.webSocket
-GET         /js/interpretedJS        controllers.Application.interpretedJS()
+GET         /websocket               controllers.Dashboard.webSocket
+GET         /js/interpretedJS        controllers.Dashboard.interpretedJS()
 
-POST        /authentification        controllers.Application.authentification
+POST        /authentification        controllers.Dashboard.authentification
 
 # Mobile
-GET         /m                       controllers.Application.mobile
-GET         /m/user/:name            controllers.Application.mobileSpeak(name)
-GET         /m/logout                controllers.Application.logout
+GET         /m                       controllers.Mobile.mobile
+GET         /m/user/:name            controllers.Mobile.mobileSpeak(name)
+GET         /m/logout                controllers.Mobile.logout
 
-POST        /m/newUser               controllers.Application.newUser
+POST        /m/newUser               controllers.Mobile.newUser
 
 # WebSocket
 GET         /sse                     controllers.Pusher.sse()
