@@ -1,6 +1,7 @@
-package model
+package core
 
 import controllers.Pusher
+import model.Spectator
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,9 +11,9 @@ import controllers.Pusher
  * Time: 17:12
  */
 
-class SpectatorManager {
+object SpectatorManager {
 
-  var users: List[Spectator] = Nil
+  private var users: List[Spectator] = Nil
 
   def addSpectator( name: String ) {
     users = new Spectator( name ) :: users
@@ -23,5 +24,7 @@ class SpectatorManager {
     users = users.filterNot( user => user.name == name)
     Pusher.pushDelUser( name )
   }
+
+  def getSpectators = users
 
 }

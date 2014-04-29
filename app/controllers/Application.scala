@@ -3,7 +3,7 @@ package controllers
 import play.api.mvc._
 import play.api.data.Form
 import play.api.data.Forms._
-import model.{SpectatorManager, Spectator}
+import core.SpectatorManager
 
 object Application extends Controller {
 
@@ -19,18 +19,29 @@ object Application extends Controller {
     "name" -> nonEmptyText
   )
 
-  // -----
-
-  var sm = new SpectatorManager()
+  lazy val token = System.currentTimeMillis()
 
   // --- Dashboard ---
 
-  def index = Action {
-    Ok( views.html.index() )
+  def dashboardLogin = Action { implicit request =>
+    request.session.get("token").fold(
+      Ok( views.html.dashboardLogin() )
+    ) (
+      token => Redirect( routes.Application.dashboard() )
+    )
   }
 
-  def dashboard = Action {
-    Ok( views.html.dashboard( sm.users ) )
+  def dashboard = Action { implicit request =>
+    request.session.get("token").fold(
+      Redirect( routes.Application.dashboardLogin() )
+    ) (
+      admin => {
+        if ( admin == token.toString )
+          Ok( views.html.dashboard( SpectatorManager.getSpectators ) )
+        else
+          Redirect( routes.Application.dashboardLogin() )
+      }
+    )
   }
 
   def webSocket() = Action {
@@ -44,16 +55,20 @@ object Application extends Controller {
   def authentification = Action { implicit request =>
     loginForm.bindFromRequest.fold(
       formWithErrors => {
-        Ok( views.html.index() )
+        Ok( views.html.dashboardLogin() )
       },
       user => {
         if ( user._1 == "admin" && user._2 == "admin" )
-          Redirect( routes.Application.dashboard() )
+          Redirect( routes.Application.dashboard() ).withSession( "token" -> token.toString )
         else {
-          Ok( views.html.index() )
+          Ok( views.html.dashboardLogin() )
         }
       }
     )
+  }
+
+  def dashboardLogout = Action {
+    Redirect( routes.Application.dashboardLogin() ).withNewSession
   }
 
   // --- Mobile ---
@@ -85,7 +100,7 @@ object Application extends Controller {
           BadRequest( "Invalid form" )
         },
         userName => {
-          sm.addSpectator( userName )
+          SpectatorManager.addSpectator( userName )
           Redirect( routes.Application.mobileSpeak( userName ) ).withSession( "user" -> userName )
         }
       )
@@ -99,7 +114,7 @@ object Application extends Controller {
         Redirect( routes.Application.mobile() )
       ) (
         userName => {
-          sm.delSpectator( userName )
+          SpectatorManager.delSpectator( userName )
           Redirect( routes.Application.mobile() ).withNewSession
         }
       )

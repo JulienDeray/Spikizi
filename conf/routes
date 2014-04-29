@@ -3,8 +3,9 @@
 # ~~~~
 
 # Dashboard
-GET         /                        controllers.Application.index
+GET         /                        controllers.Application.dashboardLogin
 GET         /dashboard               controllers.Application.dashboard
+GET         /dashboard/logout        controllers.Application.dashboardLogout
 
 ## JS
 GET         /websocket               controllers.Application.webSocket
