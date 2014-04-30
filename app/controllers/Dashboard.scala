@@ -28,7 +28,7 @@ object Dashboard extends Controller {
 
   lazy val token = System.currentTimeMillis()
 
-  def dashboardLogin = Action { implicit request =>
+  def login = Action { implicit request =>
     request.session.get("token").fold(
       Ok( views.html.dashboardLogin() )
     ) (
@@ -72,7 +72,7 @@ object Dashboard extends Controller {
     )
   }
 
-  def dashboardLogout = Action {
+  def logout = Action {
     Redirect( routes.Dashboard.dashboardLogin() ).withNewSession
   }
 

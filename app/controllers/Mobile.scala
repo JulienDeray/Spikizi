@@ -13,7 +13,7 @@ object Mobile extends Controller {
 
   // --- Mobile ---
 
-  def mobile = Action { implicit request =>
+  def login = Action { implicit request =>
     request.session.get("user").fold(
       Ok( views.html.mobileLogin() )
     ) (
@@ -21,7 +21,7 @@ object Mobile extends Controller {
     )
   }
 
-  def mobileSpeak(name: String) = Action { implicit request =>
+  def dashboard(name: String) = Action { implicit request =>
     request.session.get("user").fold(
       Redirect( routes.Mobile.mobile() )
     ) (
