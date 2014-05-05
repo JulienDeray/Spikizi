@@ -14,7 +14,8 @@
             </thead>
             <tbody>
                 @users.map { user =>
-                    <tr>
+                    <tr class="user" id="@user.name">
+                        <td></td>
                         <td>@user.name</td>
                     </tr>
                 }
@@ -23,7 +24,4 @@
     </div>
 
     <h3><a href="@routes.Dashboard.logout()">Logout</a></h3>
-
-    <script src="@routes.Dashboard.webSocket()" type="text/javascript"></script>
-    <script src="@routes.Dashboard.interpretedJS()" type="text/javascript"></script>
 }

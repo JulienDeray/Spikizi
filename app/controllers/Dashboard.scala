@@ -26,7 +26,7 @@ object Dashboard extends Controller {
     )
   )
 
-  lazy val token = System.currentTimeMillis()
+  lazy val token = System.currentTimeMillis().toString
 
   def login = Action { implicit request =>
     request.session.get("token").fold(
@@ -38,23 +38,22 @@ object Dashboard extends Controller {
 
   def dashboard = Action { implicit request =>
     request.session.get("token").fold(
-      Redirect( routes.Dashboard.login() )
+      {
+        println("no token")
+        Redirect( routes.Dashboard.login() )
+      }
     ) (
-      admin => {
-        if ( admin == token.toString )
+      adminToken => {
+        if ( adminToken == token ) {
+          println( adminToken )
           Ok( views.html.dashboard( SpectatorManager.getSpectators ) )
-        else
+        }
+        else {
+          println( "invalid token" )
           Redirect( routes.Dashboard.login() )
+        }
       }
     )
-  }
-
-  def webSocket() = Action {
-    Ok( views.html.dashboardWebsocket() )
-  }
-
-  def interpretedJS() = Action {
-    Ok( views.html.interpretedJS() )
   }
 
   def authentification = Action { implicit request =>
@@ -64,7 +63,7 @@ object Dashboard extends Controller {
       },
       user => {
         if ( user._1 == "admin" && user._2 == "admin" )
-          Redirect( routes.Dashboard.dashboard() ).withSession( "token" -> token.toString )
+          Redirect( routes.Dashboard.dashboard() ).withSession( session + ("token" -> token) )
         else {
           Ok( views.html.dashboardLogin() )
         }
@@ -72,8 +71,8 @@ object Dashboard extends Controller {
     )
   }
 
-  def logout = Action {
-    Redirect( routes.Dashboard.login() ).withNewSession
+  def logout = Action { implicit request =>
+    Redirect( routes.Dashboard.login() ).withSession( session - "token" )
   }
 
 }

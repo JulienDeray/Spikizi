@@ -3,7 +3,7 @@ function openSSEConnection() {
 
     pushSource.onopen = function(e) {
         console.log("[INFO] SSE channel opened !")
-    }
+    };
 
     pushSource.onerror = function(e) {
         if (pushSource.readyState == EventSource.CLOSED) {
@@ -11,18 +11,20 @@ function openSSEConnection() {
         } else {
             console.log("[ERROR] SSE channel error : %s", e)
         }
-    }
+    };
 
     pushSource.onmessage = function ( event ) {
-        var data = JSON.parse( event.data )
-        console.log( "Update : " + data.command)
+        var data = JSON.parse( event.data );
+        console.log( "Update : " + data.command);
 
         switch( data.command ) {
             case "newUser":
-                $('#userList').append('<tr id="' + data.userName + '"><td>' + data.userName + '</td></tr>');
+                $('#userList').append('<tr id="' + data.userName + '"><td></td><td>' + data.userName + '</td></tr>');
+                putUserIds();
                 break;
             case "delUser":
                 $('#' + data.userName).remove();
+                putUserIds();
                 break;
         }
     }

@@ -9,7 +9,6 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("Flat-UI/bootstrap/css/bootstrap.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <script src="@routes.Assets.at("Flat-UI/js/jquery-2.0.3.min.js")" type="text/javascript"></script>
     </head>
     <body>
         <nav class="navbar navbar-default" role="navigation">
@@ -20,11 +19,15 @@
                 <a class="navbar-brand" href="#">Spikizi</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse-01">
-                <p class="navbar-text navbar-right">Created & designed by <a class="navbar-link" href="http://julien.deray.fr/">Julien Déray</a></p>
+                <p class="navbar-text navbar-right">Created & designed by <a target="_blank" class="navbar-link" href="http://julien.deray.fr/">Julien Déray</a></p>
             </div>
         </nav>
+
         @content
+
         <script src="@routes.Assets.at("Flat-UI/js/jquery-2.0.3.min.js")"></script>
         <script src="@routes.Assets.at("Flat-UI/js/bootstrap.min.js")"></script>
+        <script src="@routes.Assets.at("javascripts/websocket.js")"></script>
+        <script src="@routes.Assets.at("javascripts/myJS.js")"></script>
     </body>
 </html>

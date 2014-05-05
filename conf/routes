@@ -7,10 +7,6 @@ GET         /                        controllers.Dashboard.login
 GET         /dashboard               controllers.Dashboard.dashboard
 GET         /dashboard/logout        controllers.Dashboard.logout
 
-## JS
-GET         /websocket               controllers.Dashboard.webSocket
-GET         /js/interpretedJS        controllers.Dashboard.interpretedJS()
-
 POST        /authentification        controllers.Dashboard.authentification
 
 # Mobile

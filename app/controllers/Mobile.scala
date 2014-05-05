@@ -41,7 +41,7 @@ object Mobile extends Controller {
         },
         userName => {
           SpectatorManager.addSpectator( userName )
-          Redirect( routes.Mobile.dashboard( userName ) ).withSession( "user" -> userName )
+          Redirect( routes.Mobile.dashboard( userName ) ).withSession( session + ("user" -> userName) )
         }
       )
     ) (
@@ -55,7 +55,7 @@ object Mobile extends Controller {
       ) (
         userName => {
           SpectatorManager.delSpectator( userName )
-          Redirect( routes.Mobile.login() ).withNewSession
+          Redirect( routes.Mobile.login() ).withSession( session - "user" )
         }
       )
     }
