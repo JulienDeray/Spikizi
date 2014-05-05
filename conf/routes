@@ -3,20 +3,20 @@
 # ~~~~
 
 # Dashboard
-GET         /                        controllers.Dashboard.login
-GET         /dashboard               controllers.Dashboard.dashboard
-GET         /dashboard/logout        controllers.Dashboard.logout
-GET         /dashboard/sse           controllers.Pusher.sseDash
+GET         /admin                              controllers.Dashboard.login
+GET         /admin/dashboard/                   controllers.Dashboard.dashboard
+GET         /admin/dashboard/logout             controllers.Dashboard.logout
+GET         /admin/dashboard/sse                controllers.Pusher.sseDash
 
-POST        /authentification        controllers.Dashboard.authentification
+POST        /admin/auth                         controllers.Dashboard.authentification
 
 # Mobile
-GET         /m                       controllers.Mobile.login
-GET         /m/user/:name            controllers.Mobile.dashboard(name)
-GET         /m/logout                controllers.Mobile.logout
-GET         /m/sse                   controllers.Pusher.sseMob
+GET         /                                   controllers.Mobile.login
+GET         /m/user/:name                       controllers.Mobile.dashboard(name)
+GET         /m/logout                           controllers.Mobile.logout
+GET         /m/sse                              controllers.Pusher.sseMob
 
-POST        /m/newUser               controllers.Mobile.newUser
+POST        /m/newUser                          controllers.Mobile.newUser
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file            controllers.Assets.at(path="/public", file)
+GET         /assets/*file                       controllers.Assets.at(path="/public", file)
