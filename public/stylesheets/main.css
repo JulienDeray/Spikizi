@@ -54,3 +54,17 @@ body {
 .table-speech {
     width: 10%;
 }
+
+a:hover, a:focus {
+    color: #E74C3C;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #E74C3C;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #E74C3C;
+}
