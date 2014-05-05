@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(title: String)(content: Html)(logout: Html)
 
 <!DOCTYPE html>
 
@@ -19,6 +19,9 @@
                 <a class="navbar-brand" href="#">Spikizi</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse-01">
+                <ul class="nav navbar-nav">
+                    <li>@logout</li>
+                </ul>
                 <p class="navbar-text navbar-right">Created & designed by <a target="_blank" class="navbar-link" href="http://julien.deray.fr/">Julien Déray</a></p>
             </div>
         </nav>
