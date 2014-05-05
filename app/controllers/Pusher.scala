@@ -8,25 +8,38 @@ import ExecutionContext.Implicits.global
 object Pusher extends Controller {
 
 
-  val (out, channel) = Concurrent.broadcast[String]
+  val (outDash, channelDash) = Concurrent.broadcast[String]
+  val (outMob, channelMob) = Concurrent.broadcast[String]
 
-  def sse() = WebSocket.using[String] {
+  def sseDash() = WebSocket.using[String] {
     request =>
       //log the message to stdout and send response back to client
       val in = Iteratee.foreach[String] {
           msg => println(msg)
           //the Enumerator returned by Concurrent.broadcast subscribes to the channel and will
           //receive the pushed messages
-          channel push ("RESPONSE: " + msg)
+          channelDash push ("RESPONSE: " + msg)
       }
-      (in, out)
+      (in, outDash)
+  }
+
+  def sseMob() = WebSocket.using[String] {
+    request =>
+      //log the message to stdout and send response back to client
+      val in = Iteratee.foreach[String] {
+          msg => println(msg)
+          //the Enumerator returned by Concurrent.broadcast subscribes to the channel and will
+          //receive the pushed messages
+          channelMob push ("RESPONSE: " + msg)
+      }
+      (in, outMob)
   }
 
   def pushNewUser(userName: String) = {
-    channel push "{ \"command\" : \"newUser\", \"userName\" : \"" + userName + "\" }"
+    channelDash push "{ \"command\" : \"newUser\", \"userName\" : \"" + userName + "\" }"
   }
 
   def pushDelUser(userName: String) = {
-    channel push "{ \"command\" : \"delUser\", \"userName\" : \"" + userName + "\" }"
+    channelDash push "{ \"command\" : \"delUser\", \"userName\" : \"" + userName + "\" }"
   }
 }
