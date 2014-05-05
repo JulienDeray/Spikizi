@@ -1,7 +1,16 @@
 
 @mobileMain("Spikizi - Mobile") {
-    <form method="post" action="@{routes.Mobile.newUser()}">
-        <label for="name">Name : </label><input type="text" name="name" id="name"/>
-        <input type="submit" value="Submit"/>
-    </form>
+    <div class="container">
+        <form method="post" action="@{routes.Mobile.newUser()}">
+            <div class="login-screen">
+                <div class="login-form">
+                    <div class="form-group">
+                        <input name="name" type="text" class="form-control login-field" value="" placeholder="Name" id="name" required autofocus>
+                        <label class="login-field-icon fui-user" for="login-name"></label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Log in</button>
+                </div>
+            </div>
+        </form>
+    </div>
 } { }
