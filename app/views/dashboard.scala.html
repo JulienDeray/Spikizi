@@ -2,19 +2,27 @@
 
 @main("Spikizi - Dashboard") {
 
-    @*<div class="flat-well-container">*@
-    @*<div class="flat-well col-md-8 col-md-offset-2">*@
-    <table id="userList" class="table table-striped">
-        @users.map { user =>
-            <tr>
-                <td>@user.name</td>
-            </tr>
-        }
-    </table>
-    @*</div>*@
-    @*</div>*@
+    <div class="well well-lg well-custom">
+        <table id="userList" class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="table-id">#</th>
+                    <th class="table-user">User Name</th>
+                    <th class="table-state">State</th>
+                    <th class="table-speech">Speech</th>
+                </tr>
+            </thead>
+            <tbody>
+                @users.map { user =>
+                    <tr>
+                        <td>@user.name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
-    <h3><a href="@routes.Dashboard.dashboardLogout()">Logout</a></h3>
+    <h3><a href="@routes.Dashboard.logout()">Logout</a></h3>
 
     <script src="@routes.Dashboard.webSocket()" type="text/javascript"></script>
     <script src="@routes.Dashboard.interpretedJS()" type="text/javascript"></script>

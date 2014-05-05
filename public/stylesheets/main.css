@@ -1,19 +1,56 @@
 body {
-    /*background-color: #f39c12;*/
+    background-color: #E74C3C;
 }
 
-.flat-well-container {
-    background-color: #f1c40f;
-    margin-top: 30px;
-    margin-bottom: 30px;
+.form-control:focus {
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(192, 57, 43, 0.60);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(192, 57, 43, 0.60);
 }
 
-.flat-well {
-    background-color: #f1c40f;
-    padding: 20px;
+.login-form .login-field:focus {
+    border-color: #E74C3C;
+}
+
+.login-form .login-field:focus + .login-field-icon {
+    color: #E74C3C;
+}
+
+.btn-primary:hover {
+    background-color: #C0392B;
+}
+
+.btn-primary {
+    background-color: #E74C3C;
+    border-color: #EDEFF1;
+}
+
+.login-screen {
+    background-color: #E74C3C;
 }
 
 .navbar-text {
     margin-top: 0;
     margin-bottom: 0;
+}
+
+.well-custom {
+    background-color: #EDEFF1;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.table-id {
+    width: 4%;
+}
+
+.table-user {
+    width: 56%;
+}
+
+.table-state {
+    width: 10%;
+}
+
+.table-speech {
+    width: 10%;
 }

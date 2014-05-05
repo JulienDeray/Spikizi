@@ -38,13 +38,13 @@ object Dashboard extends Controller {
 
   def dashboard = Action { implicit request =>
     request.session.get("token").fold(
-      Redirect( routes.Dashboard.dashboardLogin() )
+      Redirect( routes.Dashboard.login() )
     ) (
       admin => {
         if ( admin == token.toString )
           Ok( views.html.dashboard( SpectatorManager.getSpectators ) )
         else
-          Redirect( routes.Dashboard.dashboardLogin() )
+          Redirect( routes.Dashboard.login() )
       }
     )
   }
@@ -73,7 +73,7 @@ object Dashboard extends Controller {
   }
 
   def logout = Action {
-    Redirect( routes.Dashboard.dashboardLogin() ).withNewSession
+    Redirect( routes.Dashboard.login() ).withNewSession
   }
 
 }

@@ -17,19 +17,19 @@ object Mobile extends Controller {
     request.session.get("user").fold(
       Ok( views.html.mobileLogin() )
     ) (
-      user => Redirect( routes.Mobile.mobileSpeak( user ) )
+      user => Redirect( routes.Mobile.dashboard( user ) )
     )
   }
 
   def dashboard(name: String) = Action { implicit request =>
     request.session.get("user").fold(
-      Redirect( routes.Mobile.mobile() )
+      Redirect( routes.Mobile.login() )
     ) (
       user =>
         if ( user == name )
           Ok( views.html.mobileSpeak( name ) )
         else
-          Redirect( routes.Mobile.mobile() )
+          Redirect( routes.Mobile.login() )
     )
   }
 
@@ -41,21 +41,21 @@ object Mobile extends Controller {
         },
         userName => {
           SpectatorManager.addSpectator( userName )
-          Redirect( routes.Mobile.mobileSpeak( userName ) ).withSession( "user" -> userName )
+          Redirect( routes.Mobile.dashboard( userName ) ).withSession( "user" -> userName )
         }
       )
     ) (
-      userName => Redirect( routes.Mobile.mobileSpeak( userName ) )
+      userName => Redirect( routes.Mobile.dashboard( userName ) )
     )
   }
 
   def logout = Action { implicit request => {
       request.session.get("user").fold(
-        Redirect( routes.Mobile.mobile() )
+        Redirect( routes.Mobile.login() )
       ) (
         userName => {
           SpectatorManager.delSpectator( userName )
-          Redirect( routes.Mobile.mobile() ).withNewSession
+          Redirect( routes.Mobile.login() ).withNewSession
         }
       )
     }
