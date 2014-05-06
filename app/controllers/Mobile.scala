@@ -37,11 +37,15 @@ object Mobile extends Controller {
     request.session.get("user").fold(
       userName.bindFromRequest.fold(
         formWithErrors => {
-          BadRequest( "Invalid form" )
+          Redirect( routes.Mobile.login() ).flashing( "error" -> "Please fill correctly the form." )
         },
         userName => {
-          SpectatorManager.addSpectator( userName )
-          Redirect( routes.Mobile.dashboard( userName ) ).withSession( session + ("user" -> userName) )
+          if ( SpectatorManager.exists( userName ) )
+            Redirect( routes.Mobile.login() ).flashing( "error" -> "This name is already used by somebody. Please use another one." )
+          else {
+            SpectatorManager.addSpectator( userName )
+            Redirect( routes.Mobile.dashboard( userName ) ).withSession( session + ("user" -> userName) )
+          }
         }
       )
     ) (

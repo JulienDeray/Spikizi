@@ -1,16 +1,21 @@
-
+@()(implicit flash: Flash)
 @mobileMain("Spikizi - Mobile") {
+    @flash.get("error").map(error => views.html.mobileError(error))
     <div class="container">
-        <form method="post" action="@{routes.Mobile.newUser()}">
-            <div class="login-screen">
-                <div class="login-form">
-                    <div class="form-group">
-                        <input name="name" type="text" class="form-control login-field" value="" placeholder="Name" id="name" required autofocus>
-                        <label class="login-field-icon fui-user" for="login-name"></label>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <form method="post" action="@{routes.Mobile.newUser()}">
+                    <div class="login-screen">
+                        <div class="login-form">
+                            <div class="form-group">
+                                <input name="name" type="text" class="form-control login-field" value="" placeholder="Name" id="name" required autofocus>
+                                <label class="login-field-icon fui-user" for="login-name"></label>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">Log in</button>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-lg btn-block">Log in</button>
-                </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 } { }

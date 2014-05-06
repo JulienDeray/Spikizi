@@ -26,6 +26,7 @@ body {
 
 .login-screen {
     background-color: #E74C3C;
+    padding: 0;
 }
 
 .navbar-text {

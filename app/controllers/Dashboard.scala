@@ -39,17 +39,14 @@ object Dashboard extends Controller {
   def dashboard = Action { implicit request =>
     request.session.get("token").fold(
       {
-        println("no token")
         Redirect( routes.Dashboard.login() )
       }
     ) (
       adminToken => {
         if ( adminToken == token ) {
-          println( adminToken )
           Ok( views.html.dashboard( SpectatorManager.getSpectators ) )
         }
         else {
-          println( "invalid token" )
           Redirect( routes.Dashboard.login() )
         }
       }

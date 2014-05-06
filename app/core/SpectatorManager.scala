@@ -14,6 +14,7 @@ import model.Spectator
 object SpectatorManager {
 
   private var users: List[Spectator] = Nil
+  private var speaker: Spectator = null
 
   def addSpectator( name: String ) {
     users = new Spectator( name ) :: users
@@ -27,4 +28,13 @@ object SpectatorManager {
 
   def getSpectators = users
 
+  def setSpeaker( spectator: Spectator ) {
+    speaker = spectator
+  }
+
+  def removeSpeaker() {
+    setSpeaker( null )
+  }
+
+  def exists( name: String ) : Boolean = users.exists( user => user.name == name )
 }
