@@ -1,15 +1,15 @@
 function openDashboardSSEConnection() {
-    var pushSource = new WebSocket( 'ws://localhost:9000/dashboard/sse' )
+    var pushSource = new WebSocket( 'ws://localhost:9000/admin/dashboard/sse' );
 
     pushSource.onopen = function(e) {
-        console.log("[INFO] Dashboard's SSE channel opened !")
+        console.log("[INFO] Dashboard's SSE channel opened !");
     };
 
     pushSource.onerror = function(e) {
         if (pushSource.readyState == EventSource.CLOSED) {
-            console.log("[INFO] Dashboard's SSE channel closed !")
+            console.log("[INFO] Dashboard's SSE channel closed !");
         } else {
-            console.log("[ERROR] Dashboard's SSE channel error : %s", e)
+            console.log("[ERROR] Dashboard's SSE channel error : %s", e);
         }
     };
 
