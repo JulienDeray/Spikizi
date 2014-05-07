@@ -73,14 +73,14 @@ object Dashboard extends Controller {
     Redirect( routes.Dashboard.login() ).withSession( session - "token" )
   }
 
-  def newSpeaker(userHash: String) = Action {
-    SpectatorManager.setSpeaker( userHash )
-    Pusher.updateUserState( userHash )
+  def newSpeaker(userName: String) = Action {
+    SpectatorManager.setSpeaker( userName )
+    Pusher.updateUserState( userName )
     Ok
   }
 
-  def userIcon(userHash: String) = Action {
-    Ok( views.html.dashboardStates( SpectatorManager.getSpectatorByHash( userHash ) ) )
+  def userIcon(userName: String) = Action {
+    Ok( views.html.dashboardStates( SpectatorManager.getSpectator( userName ) ) )
   }
 
   def javascriptRoutes = Action { implicit request =>

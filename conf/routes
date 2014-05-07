@@ -9,13 +9,13 @@ GET         /admin/dashboard/logout                  controllers.Dashboard.logou
 GET         /admin/dashboard/sse                     controllers.Pusher.sseDash
 
 GET         /admin/dashboard/newSpeaker/:name        controllers.Dashboard.newSpeaker(name)
-GET         /admin/dashboard/userIcon/:hash          controllers.Dashboard.userIcon(hash)
+GET         /admin/dashboard/userIcon/:name          controllers.Dashboard.userIcon(name)
 
 POST        /admin/auth                              controllers.Dashboard.authentification
 
 # Mobile
 GET         /                                        controllers.Mobile.login
-GET         /m/user/:hash                            controllers.Mobile.dashboard(hash)
+GET         /m/user/:name                            controllers.Mobile.dashboard(name)
 GET         /m/logout                                controllers.Mobile.logout
 GET         /m/sse                                   controllers.Pusher.sseMob
 

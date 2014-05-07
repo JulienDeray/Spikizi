@@ -34,15 +34,15 @@ object Pusher extends Controller {
       (in, outMob)
   }
 
-  def pushNewUser(userHash: String) = {
-    channelDash push "{ \"command\" : \"newUser\", \"userHash\" : \"" + userHash + "\" }"
+  def pushNewUser(userName: String) = {
+    channelDash push "{ \"command\" : \"newUser\", \"userName\" : \"" + userName + "\" }"
   }
 
-  def pushDelUser(userHash: String) = {
-    channelDash push "{ \"command\" : \"delUser\", \"userHash\" : \"" + userHash + "\" }"
+  def pushDelUser(userName: String) = {
+    channelDash push "{ \"command\" : \"delUser\", \"userName\" : \"" + userName + "\" }"
   }
 
-  def updateUserState(userHash: String) = {
-    channelDash push "{ \"command\" : \"updateUserState\", \"userHash\" : \"" + userHash + "\" }"
+  def updateUserState(userName: String) = {
+    channelDash push "{ \"command\" : \"updateUserState\", \"userName\" : \"" + userName + "\" }"
   }
 }

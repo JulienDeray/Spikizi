@@ -19,18 +19,18 @@ function openDashboardSSEConnection() {
 
         switch( data.command ) {
             case "newUser":
-                $('#userList').append('<tr class="user" id="' + data.userHash + '"><td></td><td>' + data.userHash + '</td></tr>');
+                $('#userList').append('<tr class="user" id="' + data.userName + '"><td></td><td>' + data.userName + '</td></tr>');
                 refreshUserClassement();
                 break;
             case "delUser":
-                $('#' + data.userHash).remove();
+                $('#' + data.userName).remove();
                 refreshUserClassement();
                 break;
             case "updateUserState":
-                var userHash = data.userHash;
-                var r = jsRoutes.controllers.Dashboard.userIcon( userHash );
+                var userName = data.userName;
+                var r = jsRoutes.controllers.Dashboard.userIcon( userName );
                 $.get(r.url, function( data ) {
-                    $('#' + userHash + ' > .iconState').html( data );
+                    $('#' + userName + ' > .iconState').html( data );
                 });
         }
     }
@@ -49,9 +49,9 @@ $(document).ready(function () {
 
     checkboxs.bootstrapSwitch("state", false);
     checkboxs.on('switchChange.bootstrapSwitch', function(event, state) {
-        var userHash = this.name.substr(0, this.name.length - 9);
+        var userId = this.name.substr(0, this.name.length - 9);
 
-        $.ajax(jsRoutes.controllers.Dashboard.newSpeaker(userHash))
+        $.ajax(jsRoutes.controllers.Dashboard.newSpeaker(userId))
             .done()
             .fail();
 

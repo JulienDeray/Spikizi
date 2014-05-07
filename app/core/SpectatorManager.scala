@@ -17,26 +17,23 @@ object SpectatorManager {
   private var users: List[Spectator] = List(new Spectator("Boby"), new Spectator("Renaud"), new Spectator("Chaton"), new Spectator("Boris Vian"))
   private var speaker: Spectator = null
 
-  def getSpectatorByName( userName: String ) : Spectator = users.find( user => user.name == userName ).getOrElse(null)
-  def getSpectatorByHash( userName: String ) : Spectator = users.find( user => user.name == userName ).getOrElse(null)
+  def getSpectator( name: String ) : Spectator = users.find( user => user.name == name ).getOrElse(null)
 
-  def addSpectator( name: String ) = {
-    val spectator = new Spectator( name )
-    users = spectator :: users
+  def addSpectator( name: String ) {
+    users = new Spectator( name ) :: users
     Pusher.pushNewUser( name )
-    spectator
   }
 
-  def delSpectator( userName: String ) {
-    val userHash = getSpectatorByName( userName ).hash
-    users = users.filterNot( user => user.name == userName )
-    Pusher.pushDelUser( userHash )
+  def delSpectator( name: String ) {
+    users = users.filterNot( user => user.name == name )
+    Pusher.pushDelUser( name )
   }
 
   def getSpectators = users
 
-  def setSpeaker( userHash: String ) {
-    getSpectatorByHash( userHash ).setSpeaking()
+  def setSpeaker( spectator: String ) {
+    speaker = getSpectator( spectator )
+    speaker.setSpeaking()
   }
 
   def removeSpeaker() {
