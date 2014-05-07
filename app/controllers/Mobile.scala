@@ -27,7 +27,7 @@ object Mobile extends Controller {
     ) (
       user =>
         if ( user == name )
-          Ok( views.html.mobileSpeak( name ) )
+          Ok( views.html.mobileSpeak( SpectatorManager.getSpectator( name ).realName ) )
         else
           Redirect( routes.Mobile.login() )
     )
@@ -43,13 +43,13 @@ object Mobile extends Controller {
           if ( SpectatorManager.exists( userName ) )
             Redirect( routes.Mobile.login() ).flashing( "error" -> "This name is already used by somebody. Please use another one." )
           else {
-            SpectatorManager.addSpectator( userName )
-            Redirect( routes.Mobile.dashboard( userName ) ).withSession( session + ("user" -> userName) )
+            val spectator = SpectatorManager.addSpectator( userName )
+            Redirect( routes.Mobile.dashboard( spectator.realName ) ).withSession( session + ("user" -> spectator.name) )
           }
         }
       )
     ) (
-      userName => Redirect( routes.Mobile.dashboard( userName ) )
+      userName => Redirect( routes.Mobile.dashboard( SpectatorManager.getSpectator( userName ).realName ) )
     )
   }
 

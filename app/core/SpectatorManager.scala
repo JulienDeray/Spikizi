@@ -19,9 +19,11 @@ object SpectatorManager {
 
   def getSpectator( name: String ) : Spectator = users.find( user => user.name == name ).getOrElse(null)
 
-  def addSpectator( name: String ) {
-    users = new Spectator( name ) :: users
+  def addSpectator( name: String ) = {
+    val spectator = new Spectator( name )
+    users = spectator :: users
     Pusher.pushNewUser( name )
+    spectator
   }
 
   def delSpectator( name: String ) {
