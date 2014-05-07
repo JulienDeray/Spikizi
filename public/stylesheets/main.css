@@ -69,3 +69,25 @@ a:hover, a:focus {
 .navbar-default .navbar-brand:focus {
     color: #E74C3C;
 }
+
+.navbar-default .navbar-text a:hover,
+.navbar-default .navbar-text a:focus {
+    color: #E74C3C;
+}
+
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-primary,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-primary {
+    background: #E74C3C;
+    border-color: #E74C3C;
+}
+
+.bootstrap-switch:focus {
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(192, 57, 43, 0.60);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(192, 57, 43, 0.60);
+}
+
+.bootstrap-switch.bootstrap-switch-focused {
+    border-color: #E74C3C;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(192, 57, 43, 0.60);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(192, 57, 43, 0.60)
+}

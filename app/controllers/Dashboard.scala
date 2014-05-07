@@ -4,6 +4,7 @@ import play.api.mvc._
 import play.api.data.Form
 import play.api.data.Forms._
 import core.SpectatorManager
+import play.api.Routes
 
 
 /**
@@ -37,20 +38,20 @@ object Dashboard extends Controller {
   }
 
   def dashboard = Action { implicit request =>
-    request.session.get("token").fold(
-      {
-        Redirect( routes.Dashboard.login() )
-      }
-    ) (
-      adminToken => {
-        if ( adminToken == token ) {
+//    request.session.get("token").fold(
+//      {
+//        Redirect( routes.Dashboard.login() )
+//      }
+//    ) (
+//      adminToken => {
+//        if ( adminToken == token ) {
           Ok( views.html.dashboard( SpectatorManager.getSpectators ) )
-        }
-        else {
-          Redirect( routes.Dashboard.login() )
-        }
-      }
-    )
+//        }
+//        else {
+//          Redirect( routes.Dashboard.login() )
+//        }
+//      }
+//    )
   }
 
   def authentification = Action { implicit request =>
@@ -72,4 +73,22 @@ object Dashboard extends Controller {
     Redirect( routes.Dashboard.login() ).withSession( session - "token" )
   }
 
+  def newSpeaker(userHash: String) = Action {
+    SpectatorManager.setSpeaker( userHash )
+    Pusher.updateUserState( userHash )
+    Ok
+  }
+
+  def userIcon(userHash: String) = Action {
+    Ok( views.html.dashboardStates( SpectatorManager.getSpectatorByHash( userHash ) ) )
+  }
+
+  def javascriptRoutes = Action { implicit request =>
+    Ok(
+      Routes.javascriptRouter("jsRoutes")(
+        routes.javascript.Dashboard.newSpeaker,
+        routes.javascript.Dashboard.userIcon
+      )
+    ).as("text/javascript")
+  }
 }

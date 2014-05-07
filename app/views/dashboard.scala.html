@@ -14,9 +14,15 @@
             </thead>
             <tbody>
                 @users.map { user =>
-                    <tr class="user" id="@user.name">
+                    <tr class="user" id="@user.hash">
                         <td></td>
                         <td>@user.name</td>
+                        <td class="iconState">
+                           @views.html.dashboardStates( user )
+                        </td>
+                        <td>
+                            <input type="checkbox" name="@{user.hash}-checkbox" data-state="false" checked>
+                        </td>
                     </tr>
                 }
             </tbody>

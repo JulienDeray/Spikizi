@@ -1,0 +1,8 @@
+@(user: model.Spectator)
+@import core.State
+
+@user.state match {
+    case State.Passive => { <span class="glyphicon glyphicon-time text-muted"></span> }
+    case State.Waiting => { <span class="glyphicon glyphicon-hand-up text-warning"></span> }
+    case State.Speaking => { <span class="glyphicon glyphicon-flash text-error"></span> }
+}

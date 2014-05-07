@@ -43,8 +43,8 @@ object Mobile extends Controller {
           if ( SpectatorManager.exists( userName ) )
             Redirect( routes.Mobile.login() ).flashing( "error" -> "This name is already used by somebody. Please use another one." )
           else {
-            SpectatorManager.addSpectator( userName )
-            Redirect( routes.Mobile.dashboard( userName ) ).withSession( session + ("user" -> userName) )
+            val user = SpectatorManager.addSpectator( userName )
+            Redirect( routes.Mobile.dashboard( user.name ) ).withSession( session + ("user" -> user.name) )
           }
         }
       )

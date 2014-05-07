@@ -19,13 +19,19 @@ function openDashboardSSEConnection() {
 
         switch( data.command ) {
             case "newUser":
-                $('#userList').append('<tr class="user" id="' + data.userName + '"><td></td><td>' + data.userName + '</td></tr>');
+                $('#userList').append('<tr class="user" id="' + data.userHash + '"><td></td><td>' + data.userHash + '</td></tr>');
                 refreshUserClassement();
                 break;
             case "delUser":
-                $('#' + data.userName).remove();
+                $('#' + data.userHash).remove();
                 refreshUserClassement();
                 break;
+            case "updateUserState":
+                var userHash = data.userHash;
+                var r = jsRoutes.controllers.Dashboard.userIcon( userHash );
+                $.get(r.url, function( data ) {
+                    $('#' + userHash + ' > .iconState').html( data );
+                });
         }
     }
 }
@@ -39,7 +45,19 @@ function refreshUserClassement() {
 }
 
 $(document).ready(function () {
-    setTimeout( openDashboardSSEConnection, 400 );
+    var checkboxs = $("input[type='checkbox']");
+
+    checkboxs.bootstrapSwitch("state", false);
+    checkboxs.on('switchChange.bootstrapSwitch', function(event, state) {
+        var userHash = this.name.substr(0, this.name.length - 9);
+
+        $.ajax(jsRoutes.controllers.Dashboard.newSpeaker(userHash))
+            .done()
+            .fail();
+
+    });
+
     refreshUserClassement();
+    setTimeout( openDashboardSSEConnection, 400 );
 });
 

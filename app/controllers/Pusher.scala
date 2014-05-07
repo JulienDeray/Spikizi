@@ -7,7 +7,6 @@ import ExecutionContext.Implicits.global
 
 object Pusher extends Controller {
 
-
   val (outDash, channelDash) = Concurrent.broadcast[String]
   val (outMob, channelMob) = Concurrent.broadcast[String]
 
@@ -35,11 +34,15 @@ object Pusher extends Controller {
       (in, outMob)
   }
 
-  def pushNewUser(userName: String) = {
-    channelDash push "{ \"command\" : \"newUser\", \"userName\" : \"" + userName + "\" }"
+  def pushNewUser(userHash: String) = {
+    channelDash push "{ \"command\" : \"newUser\", \"userHash\" : \"" + userHash + "\" }"
   }
 
-  def pushDelUser(userName: String) = {
-    channelDash push "{ \"command\" : \"delUser\", \"userName\" : \"" + userName + "\" }"
+  def pushDelUser(userHash: String) = {
+    channelDash push "{ \"command\" : \"delUser\", \"userHash\" : \"" + userHash + "\" }"
+  }
+
+  def updateUserState(userHash: String) = {
+    channelDash push "{ \"command\" : \"updateUserState\", \"userHash\" : \"" + userHash + "\" }"
   }
 }

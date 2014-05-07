@@ -7,6 +7,7 @@
         <title>@title</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("Flat-UI/bootstrap/css/bootstrap.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("Flat-UI/css/flat-ui.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-switch.min.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
     </head>
@@ -22,7 +23,7 @@
                 <ul class="nav navbar-nav">
                     <li>@logout</li>
                 </ul>
-                <p class="navbar-text navbar-right">Created & designed by <a target="_blank" class="navbar-link" href="http://julien.deray.fr/">Julien Déray</a></p>
+                <p class="navbar-text navbar-right">Created & designed by <a target="_blank" class="navbar-link" href="http://julien.deray.fr/">Julien Déray</a> and <a target="_blank" href="http://fr.linkedin.com/in/loiseauclemence">Clémence Loiseau</a></p>
             </div>
         </nav>
 
@@ -30,6 +31,8 @@
 
         <script src="@routes.Assets.at("Flat-UI/js/jquery-2.0.3.min.js")"></script>
         <script src="@routes.Assets.at("Flat-UI/js/bootstrap.min.js")"></script>
+        <script src="@routes.Assets.at("Flat-UI/js/bootstrap-switch.js")"></script>
+        <script type="text/javascript" src="@routes.Dashboard.javascriptRoutes()"></script>
         <script src="@routes.Assets.at("javascripts/dashboard.js")"></script>
     </body>
 </html>

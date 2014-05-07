@@ -13,23 +13,30 @@ import model.Spectator
 
 object SpectatorManager {
 
-  private var users: List[Spectator] = Nil
+//  private var users: List[Spectator] = Nil
+  private var users: List[Spectator] = List(new Spectator("Boby"), new Spectator("Renaud"), new Spectator("Chaton"), new Spectator("Boris Vian"))
   private var speaker: Spectator = null
 
-  def addSpectator( name: String ) {
-    users = new Spectator( name ) :: users
+  def getSpectatorByName( userName: String ) : Spectator = users.find( user => user.name == userName ).getOrElse(null)
+  def getSpectatorByHash( userName: String ) : Spectator = users.find( user => user.name == userName ).getOrElse(null)
+
+  def addSpectator( name: String ) = {
+    val spectator = new Spectator( name )
+    users = spectator :: users
     Pusher.pushNewUser( name )
+    spectator
   }
 
-  def delSpectator( name: String ) {
-    users = users.filterNot( user => user.name == name)
-    Pusher.pushDelUser( name )
+  def delSpectator( userName: String ) {
+    val userHash = getSpectatorByName( userName ).hash
+    users = users.filterNot( user => user.name == userName )
+    Pusher.pushDelUser( userHash )
   }
 
   def getSpectators = users
 
-  def setSpeaker( spectator: Spectator ) {
-    speaker = spectator
+  def setSpeaker( userHash: String ) {
+    getSpectatorByHash( userHash ).setSpeaking()
   }
 
   def removeSpeaker() {
