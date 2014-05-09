@@ -38,20 +38,20 @@ object Dashboard extends Controller {
   }
 
   def dashboard = Action { implicit request =>
-//    request.session.get("token").fold(
-//      {
-//        Redirect( routes.Dashboard.login() )
-//      }
-//    ) (
-//      adminToken => {
-//        if ( adminToken == token ) {
+    request.session.get("token").fold(
+      {
+        Redirect( routes.Dashboard.login() )
+      }
+    ) (
+      adminToken => {
+        if ( adminToken == token ) {
           Ok( views.html.dashboard( SpectatorManager.getSpectators ) )
-//        }
-//        else {
-//          Redirect( routes.Dashboard.login() )
-//        }
-//      }
-//    )
+        }
+        else {
+          Redirect( routes.Dashboard.login() )
+        }
+      }
+    )
   }
 
   def authentification = Action { implicit request =>
