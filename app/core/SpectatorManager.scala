@@ -15,14 +15,13 @@ object SpectatorManager {
 
 //  private var users: List[Spectator] = Nil
   private var users: List[Spectator] = List(new Spectator("Boby"), new Spectator("Renaud"), new Spectator("Chaton"), new Spectator("Boris Vian"))
-  private var speaker: Spectator = null
 
   def getSpectator( name: String ) : Spectator = users.find( user => user.name == name ).getOrElse(null)
 
-  def addSpectator( name: String ) = {
+  def addSpectator( name: String ) : Spectator = {
     val spectator = new Spectator( name )
     users = spectator :: users
-    Pusher.pushNewUser( name )
+    Pusher.pushNewUser( spectator.name )
     spectator
   }
 
@@ -33,13 +32,29 @@ object SpectatorManager {
 
   def getSpectators = users
 
-  def setSpeaker( spectator: String ) {
-    speaker = getSpectator( spectator )
-    speaker.setSpeaking()
+  def getSpeaker : Spectator = {
+    users.find( user => user.state == State.Speaking ).getOrElse(null)
   }
 
-  def removeSpeaker() {
-    setSpeaker( null )
+  def setSpeaker( userName: String ) {
+    users.map { user =>
+      if ( user.name == userName ) {
+        user.setSpeaking()
+        Pusher.updateUserState( user.name )
+      }
+      else if ( user.state == State.Speaking ) {
+        Pusher.setUserButtonToOff( user.name )
+      }
+    }
+  }
+
+  def removeSpeaker( userName: String ) {
+    users.map { user =>
+      if ( user.state == State.Speaking && user.name == userName ) {
+        user.setPassive()
+        Pusher.updateUserState( user.name )
+      }
+    }
   }
 
   def exists( name: String ) : Boolean = users.exists( user => user.name == name )

@@ -10,6 +10,8 @@ GET         /admin/dashboard/sse                     controllers.Pusher.sseDash
 
 GET         /admin/dashboard/newSpeaker/:name        controllers.Dashboard.newSpeaker(name)
 GET         /admin/dashboard/userIcon/:name          controllers.Dashboard.userIcon(name)
+GET         /admin/dashboard/userTemplate/:name      controllers.Dashboard.userTemplate(name)
+GET         /admin/dashboard/removeSpeaker/:name     controllers.Dashboard.removeSpeaker(name)
 
 POST        /admin/auth                              controllers.Dashboard.authentification
 

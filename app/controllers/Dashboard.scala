@@ -75,7 +75,6 @@ object Dashboard extends Controller {
 
   def newSpeaker(userName: String) = Action {
     SpectatorManager.setSpeaker( userName )
-    Pusher.updateUserState( userName )
     Ok
   }
 
@@ -83,11 +82,22 @@ object Dashboard extends Controller {
     Ok( views.html.dashboardStates( SpectatorManager.getSpectator( userName ) ) )
   }
 
+  def userTemplate(userName: String) = Action {
+    Ok( views.html.dashboardUser( SpectatorManager.getSpectator( userName ) ) )
+  }
+
+  def removeSpeaker(userName: String) = Action {
+    SpectatorManager.removeSpeaker(userName)
+    Ok
+  }
+
   def javascriptRoutes = Action { implicit request =>
     Ok(
       Routes.javascriptRouter("jsRoutes")(
         routes.javascript.Dashboard.newSpeaker,
-        routes.javascript.Dashboard.userIcon
+        routes.javascript.Dashboard.userIcon,
+        routes.javascript.Dashboard.userTemplate,
+        routes.javascript.Dashboard.removeSpeaker
       )
     ).as("text/javascript")
   }

@@ -19,8 +19,13 @@ function openDashboardSSEConnection() {
 
         switch( data.command ) {
             case "newUser":
-                $('#userList').append('<tr class="user" id="' + data.userName + '"><td></td><td>' + data.userName + '</td></tr>');
-                refreshUserClassement();
+                var userName = data.userName;
+                var r = jsRoutes.controllers.Dashboard.userTemplate( userName );
+                $.get(r.url, function( data ) {
+                    $('#userList').append( data );
+                    initCheckboxs( $('#' + userName + '-checkbox') );
+                    refreshUserClassement();
+                });
                 break;
             case "delUser":
                 $('#' + data.userName).remove();
@@ -32,6 +37,10 @@ function openDashboardSSEConnection() {
                 $.get(r.url, function( data ) {
                     $('#' + userName + ' > .iconState').html( data );
                 });
+                break;
+            case "setUserButtonToOff":
+                $('#' + data.userName + '-checkbox').bootstrapSwitch("state", false);
+                break;
         }
     }
 }
@@ -44,19 +53,26 @@ function refreshUserClassement() {
     )
 }
 
-$(document).ready(function () {
-    var checkboxs = $("input[type='checkbox']");
-
+function initCheckboxs( checkboxs ) {
     checkboxs.bootstrapSwitch("state", false);
     checkboxs.on('switchChange.bootstrapSwitch', function(event, state) {
         var userId = this.name.substr(0, this.name.length - 9);
 
-        $.ajax(jsRoutes.controllers.Dashboard.newSpeaker(userId))
-            .done()
-            .fail();
-
+        if ( state == true ) {
+            $.ajax(jsRoutes.controllers.Dashboard.newSpeaker(userId))
+                .done()
+                .fail();
+        }
+        else {
+            $.ajax(jsRoutes.controllers.Dashboard.removeSpeaker(userId))
+                .done()
+                .fail();
+        }
     });
+}
 
+$(document).ready(function () {
+    initCheckboxs( $("input[type='checkbox']") );
     refreshUserClassement();
     setTimeout( openDashboardSSEConnection, 400 );
 });

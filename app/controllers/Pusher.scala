@@ -45,4 +45,8 @@ object Pusher extends Controller {
   def updateUserState(userName: String) = {
     channelDash push "{ \"command\" : \"updateUserState\", \"userName\" : \"" + userName + "\" }"
   }
+
+  def setUserButtonToOff(userName: String) = {
+    channelDash push "{ \"command\" : \"setUserButtonToOff\", \"userName\" : \"" + userName + "\" }"
+  }
 }
