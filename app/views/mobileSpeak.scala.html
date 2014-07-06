@@ -1,8 +1,32 @@
-@(name: String)
+@(realName: String, name: String)
 
 @mobileMain("Spikizi - Mobile") {
 
-    <h1>@name</h1>
+    <div class="well well-lg well-custom container-fluid">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-8 col-xs-12 col-sm-12">
+                <h1 class="text-center" id="name" name="@name">@realName</h1>
+            </div>
+
+        </div>
+    </div>
+    <div class="well well-lg well-custom container-fluid">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-8 col-xs-10 col-sm-10 text-center" id="speak-symbole">
+                <span id="speak-passive" class="glyphicon glyphicon-certificate speak-symbole speak-symbole-on text-danger"></span>
+                <span id="speak-waiting" class="glyphicon glyphicon-certificate speak-symbole speak-symbole-off text-warning"></span>
+                <span id="speak-speaking" class="glyphicon glyphicon-certificate speak-symbole speak-symbole-off text-success"></span>
+            </div>
+
+        </div>
+    </div>
+    <div class="well well-lg well-custom container-fluid">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-8 col-xs-12 col-sm-12 text-center">
+                @views.html.mobilePassiveButton()
+            </div>
+        </div>
+    </div>
 } {
     <a href="@routes.Mobile.logout()">Logout</a>
 }

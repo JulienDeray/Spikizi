@@ -3,28 +3,33 @@
 # ~~~~
 
 # Dashboard
-GET         /admin                                   controllers.Dashboard.login
-GET         /admin/dashboard/                        controllers.Dashboard.dashboard
-GET         /admin/dashboard/logout                  controllers.Dashboard.logout
-GET         /admin/dashboard/sse                     controllers.Pusher.sseDash
+GET         /admin                                      controllers.Dashboard.login
+GET         /admin/dashboard/                           controllers.Dashboard.dashboard
+GET         /admin/dashboard/logout                     controllers.Dashboard.logout
+GET         /admin/dashboard/sse                        controllers.Pusher.sseDash
 
-GET         /admin/dashboard/newSpeaker/:name        controllers.Dashboard.newSpeaker(name)
-GET         /admin/dashboard/userIcon/:name          controllers.Dashboard.userIcon(name)
-GET         /admin/dashboard/userTemplate/:name      controllers.Dashboard.userTemplate(name)
-GET         /admin/dashboard/removeSpeaker/:name     controllers.Dashboard.removeSpeaker(name)
+GET         /admin/dashboard/newSpeaker/:name           controllers.Dashboard.newSpeaker(name)
+GET         /admin/dashboard/userIcon/:name             controllers.Dashboard.userIcon(name)
+GET         /admin/dashboard/userTemplate/:name         controllers.Dashboard.userTemplate(name)
+GET         /admin/dashboard/removeSpeaker/:name        controllers.Dashboard.removeSpeaker(name)
 
-POST        /admin/auth                              controllers.Dashboard.authentification
+POST        /admin/auth                                 controllers.Dashboard.authentification
 
 # Mobile
-GET         /                                        controllers.Mobile.login
-GET         /m/user/:name                            controllers.Mobile.dashboard(name)
-GET         /m/logout                                controllers.Mobile.logout
-GET         /m/sse                                   controllers.Pusher.sseMob
+GET         /                                           controllers.Mobile.login
+GET         /m/user/:name                               controllers.Mobile.dashboard(name)
+GET         /m/logout                                   controllers.Mobile.logout
+GET         /m/sse                                      controllers.Pusher.sseMob
 
-POST        /m/newUser                               controllers.Mobile.newUser
+GET         /m/askSpeechOn                              controllers.Mobile.askSpeechOn
+GET         /m/askSpeechOff                             controllers.Mobile.askSpeechOff
+GET         /m/waitingButton                            controllers.Mobile.waitingButton
+GET         /m/passiveButton                            controllers.Mobile.passiveButton
+
+POST        /m/newUser                                  controllers.Mobile.newUser
 
 # JS routing
-GET         /javascriptRoutes                        controllers.Dashboard.javascriptRoutes
+GET         /javascriptRoutes                           controllers.Dashboard.javascriptRoutes
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                            controllers.Assets.at(path="/public", file)
+GET         /assets/*file                               controllers.Assets.at(path="/public", file)

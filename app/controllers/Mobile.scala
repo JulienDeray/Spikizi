@@ -4,6 +4,7 @@ import play.api.mvc._
 import play.api.data.Form
 import play.api.data.Forms._
 import core.SpectatorManager
+import play.api.Routes
 
 object Mobile extends Controller {
 
@@ -26,8 +27,10 @@ object Mobile extends Controller {
       Redirect( routes.Mobile.login() )
     ) (
       user =>
-        if ( user == name )
-          Ok( views.html.mobileSpeak( SpectatorManager.getSpectator( name ).realName ) )
+        if ( user == name ) {
+          val spectator = SpectatorManager.getSpectator( name )
+          Ok( views.html.mobileSpeak( spectator.realName, spectator.name ) )
+        }
         else
           Redirect( routes.Mobile.login() )
     )
@@ -63,5 +66,39 @@ object Mobile extends Controller {
         }
       )
     }
+  }
+
+  def askSpeechOn = Action { implicit request => {
+      request.session.get("user").fold(
+        BadRequest
+      ) (
+        userName => {
+          SpectatorManager.setWaiting( userName )
+          println(userName + " waiting")
+          Ok
+        }
+      )
+    }
+  }
+
+  def askSpeechOff = Action { implicit request => {
+      request.session.get("user").fold(
+        BadRequest
+      ) (
+        userName => {
+          SpectatorManager.setPassive( userName )
+          println(userName + " passif")
+          Ok
+        }
+      )
+    }
+  }
+
+  def waitingButton = Action {
+    Ok( views.html.mobileWaitingButton() )
+  }
+
+  def passiveButton = Action {
+    Ok( views.html.mobilePassiveButton() )
   }
 }

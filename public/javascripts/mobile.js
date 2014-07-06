@@ -15,15 +15,68 @@ function openMobileSSEConnection() {
 
     pushSource.onmessage = function ( event ) {
         var data = JSON.parse( event.data );
+        var pageUser = $('#name').attr('name');
         console.log( "Update : " + data.command);
 
         switch( data.command ) {
+            case "setWaiting":
+                var userName = data.userName;
+                if (userName == pageUser) {
+                    var r = jsRoutes.controllers.Mobile.waitingButton();
+                    $.get(r.url, function( data ) {
+                        $('#ask-speech').replaceWith( data );
+                        enableNoSpeechButton();
+                    });
+                    setWaitingSymbole();
+                }
+                break;
 
+            case "setPassive":
+                var userName = data.userName;
+                if (userName == pageUser) {
+                    var r = jsRoutes.controllers.Mobile.passiveButton();
+                    $.get(r.url, function( data ) {
+                        $('#ask-speech-waiting').replaceWith(data);
+                        enableAskSpeechButton();
+                    });
+                    setPassiveSymbole();
+                }
+                break;
         }
     }
 }
 
+function setPassiveSymbole() {
+    var passive = $('#speak-waiting');
+    passive.toggleClass('speak-symbole-on', false);
+    passive.toggleClass('speak-symbole-off', true);
+    $('#speak-passive').toggleClass('speak-symbole-on', true);
+}
+
+function setWaitingSymbole() {
+    var passive = $('#speak-passive');
+    passive.toggleClass('speak-symbole-on', false);
+    passive.toggleClass('speak-symbole-off', true);
+    $('#speak-waiting').toggleClass('speak-symbole-on', true);
+}
+
+function enableNoSpeechButton() {
+    $('#ask-speech-waiting').click( function() {
+        $.ajax(jsRoutes.controllers.Mobile.askSpeechOff())
+            .done()
+            .fail();
+    });
+}
+
+function enableAskSpeechButton() {
+    $('#ask-speech').click(function () {
+        $.ajax(jsRoutes.controllers.Mobile.askSpeechOn())
+            .done()
+            .fail();
+    });
+}
 
 $(document).ready(function () {
     setTimeout( openMobileSSEConnection, 400 );
+    enableAskSpeechButton();
 });

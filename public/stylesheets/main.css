@@ -15,13 +15,25 @@ body {
     color: #E74C3C;
 }
 
+.btn-primary {
+    background-color: #E74C3C;
+    border-color: #EDEFF1;
+}
+
 .btn-primary:hover {
     background-color: #C0392B;
 }
 
-.btn-primary {
+.btn-primary:focus {
     background-color: #E74C3C;
-    border-color: #EDEFF1;
+}
+
+.btn-waiting {
+    background-color: #C0392B;
+}
+
+.btn-waiting:hover {
+    background-color: #E74C3C;
 }
 
 .login-screen {
@@ -90,4 +102,18 @@ a:hover, a:focus {
     border-color: #E74C3C;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(192, 57, 43, 0.60);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(192, 57, 43, 0.60)
+}
+
+.speak-symbole {
+    font-size: 80px;
+    padding-right: 10%;
+    padding-left: 10%;
+}
+
+.speak-symbole-off {
+    opacity: 0.3;
+}
+
+.speak-symbole-on {
+    opacity: 1;
 }

@@ -13,10 +13,10 @@ import model.Spectator
 
 object SpectatorManager {
 
-//  private var users: List[Spectator] = Nil
+  //  private var users: List[Spectator] = Nil
   private var users: List[Spectator] = List(new Spectator("Boby"), new Spectator("Renaud"), new Spectator("Chaton"), new Spectator("Boris Vian"))
 
-  def getSpectator( name: String ) : Spectator = users.find( user => user.name == name ).getOrElse(null)
+  def getSpectator( name: String ) : Spectator = users.find( user => user.name == name ).orNull
 
   def addSpectator( name: String ) : Spectator = {
     val spectator = new Spectator( name )
@@ -33,7 +33,7 @@ object SpectatorManager {
   def getSpectators = users
 
   def getSpeaker : Spectator = {
-    users.find( user => user.state == State.Speaking ).getOrElse(null)
+    users.find( user => user.state == State.Speaking ).orNull
   }
 
   def setSpeaker( userName: String ) {
@@ -58,4 +58,22 @@ object SpectatorManager {
   }
 
   def exists( name: String ) : Boolean = users.exists( user => user.name == name )
+
+  def setWaiting( userName: String ) {
+    users.map { user =>
+      if ( user.name == userName ) {
+        user.setWaiting()
+        Pusher.setWaiting( user.name )
+      }
+    }
+  }
+
+  def setPassive( userName: String ) {
+    users.map { user =>
+      if ( user.name == userName ) {
+        user.setPassive()
+        Pusher.setPassive( user.name )
+      }
+    }
+  }
 }

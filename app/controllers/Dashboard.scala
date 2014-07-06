@@ -97,7 +97,11 @@ object Dashboard extends Controller {
         routes.javascript.Dashboard.newSpeaker,
         routes.javascript.Dashboard.userIcon,
         routes.javascript.Dashboard.userTemplate,
-        routes.javascript.Dashboard.removeSpeaker
+        routes.javascript.Dashboard.removeSpeaker,
+        routes.javascript.Mobile.askSpeechOn,
+        routes.javascript.Mobile.askSpeechOff,
+        routes.javascript.Mobile.waitingButton,
+        routes.javascript.Mobile.passiveButton
       )
     ).as("text/javascript")
   }
