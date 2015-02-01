@@ -40,7 +40,7 @@ object SpectatorManager {
     users.map { user =>
       if ( user.name == userName ) {
         user.setSpeaking()
-        Pusher.updateUserState( user.name )
+        Pusher.setSpeaker( user.name )
       }
       else if ( user.state == State.Speaking ) {
         Pusher.setUserButtonToOff( user.name )
@@ -53,6 +53,8 @@ object SpectatorManager {
       if ( user.state == State.Speaking && user.name == userName ) {
         user.setPassive()
         Pusher.updateUserState( user.name )
+        Pusher.removeSpeaker( user.name )
+        Pusher.setUserButtonToOff( user.name )
       }
     }
   }

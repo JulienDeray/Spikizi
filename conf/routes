@@ -23,8 +23,11 @@ GET         /m/sse                                      controllers.Pusher.sseMo
 
 GET         /m/askSpeechOn                              controllers.Mobile.askSpeechOn
 GET         /m/askSpeechOff                             controllers.Mobile.askSpeechOff
+GET         /m/askSpeechStop                            controllers.Mobile.askSpeechStop
+
 GET         /m/waitingButton                            controllers.Mobile.waitingButton
 GET         /m/passiveButton                            controllers.Mobile.passiveButton
+GET         /m/speakingButton                           controllers.Mobile.speakingButton
 
 POST        /m/newUser                                  controllers.Mobile.newUser
 

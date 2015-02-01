@@ -94,11 +94,28 @@ object Mobile extends Controller {
     }
   }
 
+  def askSpeechStop = Action { implicit request => {
+    request.session.get("user").fold(
+      BadRequest
+    ) (
+      userName => {
+        SpectatorManager.removeSpeaker( userName )
+        println(userName + " passif")
+        Ok
+      }
+    )
+  }
+  }
+
   def waitingButton = Action {
     Ok( views.html.mobileWaitingButton() )
   }
 
   def passiveButton = Action {
     Ok( views.html.mobilePassiveButton() )
+  }
+
+  def speakingButton = Action {
+    Ok( views.html.mobileSpeakingButton() )
   }
 }

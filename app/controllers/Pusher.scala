@@ -59,4 +59,14 @@ object Pusher extends Controller {
     channelMob push "{ \"command\" : \"setPassive\", \"userName\" : \"" + userName + "\" }"
     updateUserState( userName )
   }
+
+  def setSpeaker( userName: String) {
+    channelMob push "{ \"command\" : \"setSpeaker\", \"userName\" : \"" + userName + "\" }"
+    updateUserState( userName )
+  }
+
+  def removeSpeaker( userName: String) {
+    channelMob push "{ \"command\" : \"removeSpeaker\", \"userName\" : \"" + userName + "\" }"
+    updateUserState( userName )
+  }
 }
